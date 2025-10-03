@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relivia - Login</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Arial", sans-serif;
+    }
+
+    body,
+    html {
+        height: 100%;
+    }
+
+    /* Container */
+    .container {
+        display: flex;
+        height: 100vh;
+    }
+
+    /* Left Section */
+    .left {
+        flex: 1;
+        background-color: #3366cc;
+        color: #fff;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 40px;
+    }
+
+    .left h2 {
+        margin-bottom: 15px;
+    }
+
+    .left p {
+        line-height: 1.6;
+        margin-bottom: 15px;
+        font-size: 14px;
+    }
+
+    .footer-text {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .footer-text p {
+        margin-bottom: 15px;
+    }
+
+    .brand {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 22px;
+        font-weight: bold;
+    }
+
+    .brand .logo {
+        margin-right: 8px;
+    }
+
+    /* Right Section */
+    .right {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #fff;
+    }
+
+    .login-box {
+        width: 350px;
+    }
+
+    .logo-title {
+        display: flex;
+        align-items: center;
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .logo-title .logo {
+        margin-right: 8px;
+    }
+
+    .login-box h2 {
+        margin-bottom: 10px;
+    }
+
+    .subtitle {
+        margin-bottom: 20px;
+        font-size: 14px;
+        color: #666;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    label {
+        font-size: 14px;
+        margin: 10px 0 5px;
+        font-weight: 500;
+    }
+
+    input {
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        margin-bottom: 15px;
+        font-size: 14px;
+    }
+
+    .password-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .password-row a {
+        font-size: 13px;
+        color: #3366cc;
+        text-decoration: none;
+    }
+
+    .password-row a:hover {
+        text-decoration: underline;
+    }
+
+    button {
+        padding: 12px;
+        border: none;
+        border-radius: 6px;
+        background-color: #3366cc;
+        color: #fff;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+
+    button:hover {
+        background-color: #254b9c;
+    }
+
+    .logo-circle {
+        width: 40px;
+        height: 40px;
+        background-color: #4285F4;
+        /* Blue circle */
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: 8px;
+    }
+
+    .heart {
+        position: relative;
+        width: 16px;
+        height: 14px;
+        background: white;
+        transform: rotate(-45deg);
+    }
+
+    .heart::before,
+    .heart::after {
+        content: "";
+        position: absolute;
+        width: 16px;
+        height: 14px;
+        background: white;
+        border-radius: 50%;
+    }
+
+    .heart::before {
+        top: -8px;
+        left: 0;
+    }
+
+    .heart::after {
+        left: 8px;
+        top: 0;
+    }
+</style>
+
+<body>
+    <div class="container">
+
+        <!-- Left Section -->
+        <div class="left">
+            <div class="about">
+                <h2>About Relivia</h2>
+                <p>
+                    Relivia — Request Help is a community-centered disaster-response application designed
+                    to provide immediate support during emergencies. In critical situations such as floods,
+                    earthquakes, severe weather, or health crises, the app enables individuals to quickly
+                    submit requests for assistance, ensuring that no call for help goes unheard.
+                </p>
+                <p>
+                    Response teams are notified instantly through reliable communication channels, allowing
+                    them to act without delay. Relivia not only connects people to emergency services but also
+                    tracks alert performance in real time, helping authorities monitor response rates, message
+                    delivery, and overall effectiveness.
+                </p>
+                <p>
+                    By bridging the gap between those in need and those who can help, Relivia strengthens
+                    community safety, reduces response time, and ultimately saves lives when it matters most.
+                </p>
+            </div>
+
+            <div class="footer-text">
+                <p>Relivia stands as a bridge between urgent need and timely response.</p>
+                <div class="brand">
+                    <div class="logo-circle">
+                        <div class="heart"></div>
+                    </div>
+                    <span class="brand-name">Relivia</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Section -->
+        <div class="right">
+            <div class="login-box">
+                <div class="logo-title">
+                    <div class="logo-circle">
+                        <div class="heart"></div>
+                    </div>
+                    <span class="brand-name">Relivia</span>
+                </div>
+                <h2>Log In to your account</h2>
+                <p class="subtitle">To continue where you left off, please enter your details.</p>
+
+                <form>
+                    <label>User Id</label>
+                    <input type="text" placeholder="Your User Id">
+
+                    <div class="password-row">
+                        <label>Password</label>
+                        <a href="#">Forgot Password?</a>
+                    </div>
+                    <input type="password" placeholder="Your Password">
+
+                    <button type="submit">LOGIN</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    <script src="login.js"></script>
+</body>
+
+</html>

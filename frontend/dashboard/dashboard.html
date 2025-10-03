@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Disaster Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9fafb;
+      margin: 0;
+      padding: 20px;
+      color: #1f2937;
+    }
+    .navbar {
+      display: flex;
+      color:white;
+      align-items: center;
+      justify-content: space-between;
+      background: #1A1A2E;
+      padding: 0.75rem 2rem;
+      border-bottom: 1px solid #e5e7eb;
+    }
+     .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-links a {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      text-decoration: none;
+      font-size: 0.95rem;
+      color: white;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      transition: background 0.2s, color 0.2s;
+    }
+    .nav-links a:hover {
+      background: #47017c;
+    }
+    .nav-links a.active {
+      background: #DFFFE0;
+      color: #693aeb;
+      font-weight: 600;
+      border: 1px solid #fecaca;
+    }
+
+    .nav-links a.logout {
+      color: white;
+      font-weight: 700;
+    }
+    .nav-links a.logout:hover {
+      background: #47017c;
+    }
+
+
+    .space-y-6 > * + * { margin-top: 1.5rem; }
+    .space-y-3 > * + * { margin-top: 0.75rem; }
+    .grid { display: grid; gap: 1.5rem; }
+    .grid-cols-1 { grid-template-columns: 1fr; }
+    .md\:grid-cols-4 { grid-template-columns: repeat(4, 1fr); }
+    .lg\:grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
+    .lg\:col-span-2 { grid-column: span 2; }
+    .card {
+      background: white;
+      border-radius: 0.75rem;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+      padding: 1rem;
+    }
+    .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
+    .card-title { font-size: 0.875rem; font-weight: 600; }
+    .card-content { font-size: 0.875rem; }
+    .alert {
+      border-radius: 0.5rem;
+      padding: 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+    .alert-critical { border-left: 4px solid #ef4444; background: #fee2e2; }
+    .alert-high { border-left: 4px solid #f97316; background: #ffedd5; }
+    .alert-title { font-weight: 600; display: flex; justify-content: space-between; }
+    .alert-description { display: flex; justify-content: space-between; font-size: 0.875rem; }
+    .badge {
+      display: inline-block;
+      padding: 0.125rem 0.5rem;
+      font-size: 0.75rem;
+      border-radius: 0.375rem;
+      background: #e5e7eb;
+    }
+    .badge-critical { background: #ef4444; color: white; }
+    .badge-secondary { background: #e5e7eb; color: #111827; }
+    .metric-number { font-size: 1.5rem; font-weight: bold; }
+    .map-container {
+      position: relative;
+      background: linear-gradient(to bottom right, #d1fae5, #bfdbfe);
+      border-radius: 0.75rem;
+      height: 24rem;
+      overflow: hidden;
+    }
+    .map-pin {
+      position: absolute;
+      width: 1.5rem;
+      height: 1.5rem;
+      border-radius: 9999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 0.75rem;
+      cursor: pointer;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+      transition: transform 0.2s;
+    }
+    .map-pin:hover { transform: scale(1.1); }
+    .bg-orange { background: #f97316; }
+    .bg-blue { background: #3b82f6; }
+    .bg-red { background: #ef4444; }
+    .bg-green { background: #10b981; }
+    .bg-gray { background: #6b7280; }
+    .map-legend {
+      position: absolute;
+      bottom: 1rem;
+      left: 1rem;
+      background: white;
+      padding: 0.75rem;
+      border-radius: 0.5rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      font-size: 0.75rem;
+    }
+    .map-legend h4 { margin-bottom: 0.5rem; font-weight: 600; }
+    .legend-item { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem; }
+    .legend-color { width: 0.75rem; height: 0.75rem; border-radius: 9999px; }
+    .feed-item { border-left: 4px solid #e5e7eb; padding-left: 1rem; padding-bottom: 1rem; margin-bottom: 1rem; }
+    .feed-item .text-sm { font-size: 0.875rem; }
+    .feed-item .text-xs { font-size: 0.75rem; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      border: 1px solid #d1d5db;
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.375rem;
+      background: white;
+      cursor: pointer;
+      font-size: 0.75rem;
+    }
+    .brand {
+  display: flex;           /* align children side by side */
+  align-items: center;     /* vertically center the logo and text */
+  gap: 10px;               /* space between logo and text */
+}
+
+    .logo-circle {
+        width: 40px;
+        height: 40px;
+        background-color: #4285F4;
+        /* Blue circle */
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: 8px;
+    }
+
+    .heart {
+        position: relative;
+        width: 16px;
+        height: 14px;
+        background: white;
+        transform: rotate(-45deg);
+    }
+
+    .heart::before,
+    .heart::after {
+        content: "";
+        position: absolute;
+        width: 16px;
+        height: 14px;
+        background: white;
+        border-radius: 50%;
+    }
+
+    .heart::before {
+        top: -8px;
+        left: 0;
+    }
+
+    .heart::after {
+        left: 8px;
+        top: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="space-y-6">
+      <nav class="navbar">
+    <!-- Logo -->
+   <div class="brand">
+  <div class="logo-circle">
+    <div class="heart"></div>
+  </div>
+  <span class="brand-name">Relivia</span>
+</div>
+
+    <!-- Links -->
+    <div class="nav-links">
+      <a href="#" class="active" id="dashboardLink">🏠 Dashboard</a>
+      <a href="#" id="reportLink">📝 Report</a>
+      <a href="#" id="controlPanelLink">⚙ Control Panel</a>
+      <a href="#" id="analyticsLink">📊 Analytics</a>
+      <a href="#" class="logout" id="loginLink">➡ Logout</a>
+    </div>
+  </nav>
+
+
+
+    <!-- Alerts -->
+    <div class="space-y-3">
+      <div class="alert alert-critical">
+        <div class="alert-title">
+          Major Wildfire Alert
+          <span class="badge badge-critical">CRITICAL</span>
+        </div>
+        <div class="alert-description">
+          <span>Large wildfire reported in Northern California. Evacuation orders in effect.</span>
+          <span class="text-xs">2 min ago</span>
+        </div>
+      </div>
+      <div class="alert alert-high">
+        <div class="alert-title">
+          Flash Flood Warning
+          <span class="badge badge-secondary">HIGH</span>
+        </div>
+        <div class="alert-description">
+          <span>Heavy rainfall causing flash floods in downtown areas.</span>
+          <span class="text-xs">15 min ago</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Metrics -->
+    <div class="grid md:grid-cols-4">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Active Disasters</span>
+          ⚠
+        </div>
+        <div class="card-content">
+          <div class="metric-number" style="color:#dc2626;">24</div>
+          <p class="text-xs">+3 from last hour</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Verified Reports</span>
+          ✅
+        </div>
+        <div class="card-content">
+          <div class="metric-number" style="color:#16a34a;">18</div>
+          <p class="text-xs">75% verification rate</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Affected Locations</span>
+          🏢
+        </div>
+        <div class="card-content">
+          <div class="metric-number" style="color:#2563eb;">12</div>
+          <p class="text-xs">Across 8 states</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">People Affected</span>
+          👥
+        </div>
+        <div class="card-content">
+          <div class="metric-number" style="color:#7e22ce;">45.2K</div>
+          <p class="text-xs">Estimated impact</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dashboard Layout -->
+    <div class="grid lg:grid-cols-3">
+      <!-- Map -->
+      <div class="card lg:col-span-2">
+        <div class="card-header"><strong>📍 Live Disaster Map</strong></div>
+        <div class="card-content">
+          <div class="map-container">
+            <!-- Example pins -->
+            <div class="map-pin bg-orange" style="top:30%; left:20%;">🔥</div>
+            <div class="map-pin bg-blue" style="top:50%; left:60%;">💧</div>
+            <div class="map-pin bg-red" style="top:70%; left:40%;">⚠</div>
+            <div class="map-pin bg-green" style="top:20%; left:80%;">✅</div>
+
+            <!-- Legend -->
+            <div class="map-legend">
+              <h4>Legend</h4>
+              <div class="legend-item"><div class="legend-color" style="background:#ef4444;"></div> Danger</div>
+              <div class="legend-item"><div class="legend-color" style="background:#3b82f6;"></div> Flood</div>
+              <div class="legend-item"><div class="legend-color" style="background:#f97316;"></div> Fire</div>
+              <div class="legend-item"><div class="legend-color" style="background:#10b981;"></div> Verified</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Feed -->
+      <div class="card">
+        <div class="card-header">
+          <span>Live Feed</span>
+          <button class="btn">Filter</button>
+        </div>
+        <div class="card-content">
+          <div class="feed-item">
+            <div class="flex">
+              <span class="badge">Emergency Services</span>
+              <span class="badge" style="background:#dcfce7; color:#166534;">95% credible</span>
+            </div>
+            <p class="text-sm">Fire crews responding to 3-alarm fire in residential area</p>
+            <div class="flex justify-between">
+              <span class="badge">🔥 Fire</span>
+              <button class="btn">Media</button>
+            </div>
+          </div>
+          <div class="feed-item">
+            <div class="flex">
+              <span class="badge">Citizen Report</span>
+              <span class="badge" style="background:#fef9c3; color:#a16207;">78% credible</span>
+            </div>
+            <p class="text-sm">Street flooding on Main St, cars unable to pass</p>
+            <div class="flex justify-between">
+              <span class="badge">💧 Flood</span>
+              <button class="btn">Media</button>
+            </div>
+          </div>
+          <div class="feed-item">
+            <div class="flex">
+              <span class="badge">Weather Service</span>
+              <span class="badge" style="background:#dcfce7; color:#166534;">98% credible</span>
+            </div>
+            <p class="text-sm">Severe thunderstorm warning issued for metropolitan area</p>
+            <div class="flex justify-between">
+              <span class="badge">🌩 Storm</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <script src="dashboard.js"></script>
+</body>
+</html>

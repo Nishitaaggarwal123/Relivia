@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Analytics Dashboard</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f9fafb;
+      color: #111827;
+    }
+    .header {
+      background: linear-gradient(to right,  #02edbe, #f2f6ff);
+      border-bottom: 1px solid #e5d4ff;
+      padding: 16px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 0 0 12px 12px;
+    }
+    .header .title {
+      font-size: 1.6rem;
+      font-weight: bold;
+      color: #111827;
+    }
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .admin-id {
+      background: #fff;
+      border: 1px solid #d1d5db;
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #111827;
+    }
+    .system-status {
+      background: #d1fae5;
+      color: #059669;
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .system-status::before {
+      content: "✔";
+      font-weight: bold;
+    }
+    .container {
+      padding: 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+    .card {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    }
+    .card h3 {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .grid {
+      display: grid;
+      gap: 20px;
+    }
+    .grid-4 {
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+    .grid-2 {
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+    .stat-value {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-top: 8px;
+    }
+    .stat-sub {
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+    .chip {
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 0.7rem;
+      font-weight: bold;
+      text-transform: capitalize;
+    }
+    .chip.high { background: #fee2e2; color: #b91c1c; }
+    .chip.medium { background: #fef3c7; color: #b45309; }
+    .chip.low { background: #dcfce7; color: #166534; }
+    .progress {
+      background: #e5e7eb;
+      border-radius: 8px;
+      height: 8px;
+      margin-top: 8px;
+      overflow: hidden;
+    }
+    .progress-bar {
+      height: 8px;
+      border-radius: 8px;
+    }
+    .progress-bar.high { background: #ef4444; }
+    .progress-bar.medium { background: #f59e0b; }
+    .progress-bar.low { background: #22c55e; }
+    .chart-placeholder {
+      background: repeating-linear-gradient(
+        -45deg,
+        #f3f4f6,
+        #f3f4f6 10px,
+        #e5e7eb 10px,
+        #e5e7eb 20px
+      );
+      height: 200px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      color: #6b7280;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <!-- Header -->
+  <div class="header">
+    <div class="title">Analytics Dashboard</div>
+    <div class="header-right">
+      <div class="admin-id">👤 Admin</div>
+      <div class="system-status">System Active</div>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <!-- Controls -->
+    <div class="card">
+      <div style="margin-top:10px; display:flex; gap:10px;">
+        <select>
+          <option>Last Week</option>
+          <option selected>Last Month</option>
+          <option>Last Quarter</option>
+          <option>Last Year</option>
+        </select>
+        <select>
+          <option selected>Incidents</option>
+          <option>Severity</option>
+          <option>Response Time</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Key Stats -->
+    <div class="grid grid-4" style="margin-top:20px;">
+      <div class="card">
+        <h3>⚠ Total Incidents</h3>
+        <div class="stat-value">1,247</div>
+        <div class="stat-sub">+12% from last month</div>
+      </div>
+      <div class="card">
+        <h3>⏱ Avg Response Time</h3>
+        <div class="stat-value">14.5 min</div>
+        <div class="stat-sub">-2.3 min improvement</div>
+      </div>
+      <div class="card">
+        <h3>✅ Verification Rate</h3>
+        <div class="stat-value">78%</div>
+        <div class="stat-sub">+5% from last month</div>
+      </div>
+      <div class="card">
+        <h3>📍 Active Locations</h3>
+        <div class="stat-value">52</div>
+        <div class="stat-sub">Across 18 states</div>
+      </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="grid grid-2" style="margin-top:20px;">
+      <div class="card">
+        <h3>📊 Disaster Frequency by Type</h3>
+        <canvas id="barChart"></canvas>
+      </div>
+      <div class="card">
+        <h3>✅ Report Verification Status</h3>
+        <canvas id="pieChart"></canvas>
+
+      </div>
+      <div class="card">
+        <h3>📈 Incident Trends Over Time</h3>
+        <canvas id="lineChart"></canvas>
+
+
+
+      </div>
+      <div class="card">
+        <h3>⏱ Avg Response Time by Hour</h3>
+    
+        <canvas id="responseTimeChart"></canvas>
+      </div>
+    </div>
+
+    <!-- Heatmap -->
+    <div class="card" style="margin-top:20px;">
+      <h3>📍 Incident Heatmap by Location</h3>
+      <div class="grid grid-4" style="margin-top:15px;">
+        <div class="card">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span>California</span><span class="chip high">high</span>
+          </div>
+          <div class="stat-value">125</div>
+          <div class="stat-sub">incidents reported</div>
+          <div class="progress"><div class="progress-bar high" style="width:100%"></div></div>
+        </div>
+        <div class="card">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span>Florida</span><span class="chip medium">medium</span>
+          </div>
+          <div class="stat-value">89</div>
+          <div class="stat-sub">incidents reported</div>
+          <div class="progress"><div class="progress-bar medium" style="width:71%"></div></div>
+        </div>
+        <div class="card">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span>Texas</span><span class="chip medium">medium</span>
+          </div>
+          <div class="stat-value">76</div>
+          <div class="stat-sub">incidents reported</div>
+          <div class="progress"><div class="progress-bar medium" style="width:61%"></div></div>
+        </div>
+        <div class="card">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span>New York</span><span class="chip low">low</span>
+          </div>
+          <div class="stat-value">45</div>
+          <div class="stat-sub">incidents reported</div>
+          <div class="progress"><div class="progress-bar low" style="width:36%"></div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>

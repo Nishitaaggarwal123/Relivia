@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Relivia — Request Help</title>
+  <style>
+   body {
+  font-family: Arial, sans-serif;
+  background: #f4f6fa;  
+  padding: 0;
+  color: #333;
+  display: flex;             
+  justify-content: center; 
+  align-items: center;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+
+.card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.2rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
+}
+.card h2 {
+  margin-top: 0;
+  color: #2c3e50;
+  text-align: center; 
+}
+
+.hero {
+  background: linear-gradient(to right, #e8f1ff, #f3e8ff);
+  border: 1px solid #c5d8f7;
+  text-align: center;
+  padding: 2rem 1rem;
+  border-radius: 12px;
+}
+
+.hero-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #2563eb;
+  color: white;
+  font-size: 2rem;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin-bottom: 1rem;
+}
+
+form .field {
+  margin-bottom: 1rem;
+}
+
+form label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 0.3rem;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;  
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 0.95rem;
+}
+
+textarea {
+  resize: vertical;
+}
+
+button { background: #2563eb;
+     color: #fff;
+     padding: 0.8rem 1rem; 
+    border: none;
+     border-radius: 8px; 
+    font-size: 1rem; 
+    cursor: pointer; margin-top: 0.5rem; width: 100%; }
+ button:hover { 
+    background: #1e4fd6; 
+}
+ .alert-box {
+  position:relative;     
+  left: 0;
+  width:98%;
+  background: #fef2f2;
+  border-top: 2px solid #b91c1c;
+  padding: 1rem;
+  font-size: 0.95rem;
+  color: #b91c1c;
+  z-index: 1000;        
+}
+
+.alert-header {
+  font-weight: bold;
+ 
+  align-items: center;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.alert-header .icon {
+  margin-right: 0.5rem;
+  font-size: 1.2rem;
+}
+
+.alert-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.alert-list li {
+  margin: 0.3rem 0;
+}
+
+.alert-list .number {
+  font-weight: bold;
+  color: #000;
+}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Hero Section -->
+    <div class="hero">
+      <div class="hero-icon">❤</div>
+      <h1>Relivia — Request Help</h1>
+      <p>If you need emergency assistance during a disaster, fill out the form below. Our response teams will be notified immediately.</p>
+    </div>
+
+    <div class="grid">
+      <!-- Request Form -->
+      <div class="card">
+        <h2>Submit Help Request</h2>
+        <form>
+          <div class="field">
+            <label for="name">Your Name</label>
+            <input id="name" type="text" placeholder="Enter your full name" required />
+          </div>
+          <div class="field">
+            <label for="contact">Phone or SMS Number</label>
+            <input id="contact" type="text" placeholder="+91XXXXXXXX" required />
+          </div>
+          <div class="field">
+            <label for="location">Your Location</label>
+            <input id="location" type="text" placeholder="Address or nearest landmark" required />
+          </div>
+          <div class="field">
+            <label for="needType">Type of Assistance Needed</label>
+            <select id="needType">
+              <option value="medical">Medical / Health Emergency</option>
+              <option value="rescue">Rescue / Evacuation</option>
+              <option value="supplies">Food / Water / Supplies</option>
+              <option value="shelter">Shelter / Housing</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="priority">Priority Level</label>
+            <select id="priority">
+              <option value="critical">Critical - Life Threatening</option>
+              <option value="high">High - Urgent Need</option>
+              <option value="medium" selected>Medium - Important</option>
+              <option value="low">Low - Non-urgent</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="need">What do you need?</label>
+            <textarea id="need" rows="4" placeholder="Please describe your situation..."></textarea>
+          </div>
+          <button type="submit">Send Help Request</button>
+        </form>
+       
+<div class="alert-box" >
+    <div class="alert-header"  >
+      <span class="icon">⚠</span>
+      <strong >Emergency Numbers</strong>
+    </div>
+    <ul class="alert-list" style="text-align: center;">
+      <li><span class="number">112</span> – Police, Fire, Ambulance</li>
+      <li><span class="number"></span> – Disaster Relief</li>
+    </ul>
+  </div>
+
+  </div>
+    </div>
+</div>
+<script src="request.js"></script>
+</body>
+</html>

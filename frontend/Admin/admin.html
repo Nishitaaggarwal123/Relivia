@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Control Panel</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+    body {
+      background: #f9fafb;
+      color: #111827;
+      padding: 20px;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f5f7fa;
+      margin: 0;
+      padding: 20px;
+      color: #333;
+    }
+
+    /* Header Section */
+    .header {
+      background: linear-gradient(to right, #02edbe, #f2f6ff);
+      border: 1px solid #e5d4ff;
+      border-radius: 12px;
+      padding: 20px 30px;
+      margin-bottom: 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header .title {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #111827;
+    }
+
+    .header .subtitle {
+      font-size: 1rem;
+      color: #4b5563;
+      margin-top: 5px;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .admin-id {
+      background: #fff;
+      border: 1px solid #d1d5db;
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #111827;
+    }
+
+    .system-status {
+      background: #d1fae5;
+      color: #059669;
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .system-status::before {
+      content: "✔";
+      font-weight: bold;
+    }
+    .grid {
+      display: grid;
+      gap: 20px;
+    }
+    .grid-cols-4 {
+      grid-template-columns: repeat(4, 1fr);
+    }
+    .card {
+      background: white;
+      border-radius: 10px;
+      padding: 16px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .card h3 {
+      font-size: 14px;
+      font-weight: 500;
+      color: #6b7280;
+    }
+    .card .value {
+      font-size: 22px;
+      font-weight: 700;
+      margin-top: 8px;
+    }
+    .tabs {
+      display: flex;
+      gap: 30px;
+      border-bottom: 1px solid #e5e7eb;
+      margin: 20px 0;
+      padding-bottom: 8px;
+    }
+    .tabs div {
+      font-size: 14px;
+      font-weight: 500;
+      color: #374151;
+      cursor: pointer;
+    }
+    .tabs div.active {
+      color: #2563eb;
+      border-bottom: 2px solid #2563eb;
+      padding-bottom: 6px;
+    }
+    .panel {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .panel-card {
+      background: white;
+      border-radius: 10px;
+      padding: 16px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .panel-card h2 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    .form-group {
+      margin-bottom: 14px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      margin-bottom: 6px;
+    }
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      padding: 8px;
+      font-size: 14px;
+    }
+    .actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .btn {
+      padding: 10px 16px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .btn-primary {
+      background: #2563eb;
+      color: white;
+    }
+    .btn-outline {
+      background: white;
+      border: 1px solid #d1d5db;
+      color: #374151;
+    }
+    .sms-list {
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .sms-item {
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 12px;
+      background: #f9fafb;
+    }
+    .sms-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      margin-bottom: 6px;
+    }
+    .sms-message {
+      font-size: 13px;
+      margin-bottom: 6px;
+    }
+    .sms-footer {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: #6b7280;
+    }
+    .tag {
+      font-size: 11px;
+      padding: 2px 6px;
+      border-radius: 6px;
+      background: #e5e7eb;
+      margin-right: 6px;
+    }
+    .status {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: capitalize;
+    }
+    
+    .status.new { color: #dc2626; }
+    /* Toggle Switch */
+.toggle-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 42px;
+  height: 22px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #d1d5db;
+  transition: .3s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: .3s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #2563eb;
+}
+
+input:checked + .slider:before {
+  transform: translateX(20px);
+}
+
+  </style>
+</head>
+<body>
+  <!-- Header Section -->
+  <div class="header">
+    <div>
+      <div class="title">Admin Control Panel</div>
+      <div class="subtitle">Manage alerts, communications, and monitor health risks</div>
+    </div>
+    <div class="header-right">
+      <div class="admin-id">👤 Admin</div>
+      <div class="system-status">System Active</div>
+    </div>
+  </div>
+
+
+  <!-- Top Stats -->
+  <div class="grid grid-cols-4">
+    <div class="card">
+      <h3>Total Alerts Sent</h3>
+      <div class="value">1,847</div>
+      <p class="text-xs text-gray-500">+124 from yesterday</p>
+    </div>
+    <div class="card">
+      <h3>SMS Messages</h3>
+      <div class="value">1,243</div>
+      <p class="text-xs text-gray-500">87% response rate</p>
+    </div>
+    <div class="card">
+      <h3>Phone Calls</h3>
+      <div class="value" style="color:#16a34a">604</div>
+      <p class="text-xs text-gray-500">Avg: 4.2 min</p>
+    </div>
+    <div class="card">
+      <h3>Active Recipients</h3>
+      <div class="value" style="color:#f97316">3,421</div>
+      <p class="text-xs text-gray-500">12 pending requests</p>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <div class="active">SMS Alerts</div>
+    <div >Phone Requests</div>
+    <div >NGO Resources</div>
+    <div >Alert Manager</div>
+  </div>
+
+  <!-- Panels -->
+  <div class="panel">
+    <!-- Send SMS Alert -->
+    <div class="panel-card">
+      <h2>📨 Send SMS Alert</h2>
+      <div class="form-group toggle-container">
+    <label for="bulk-toggle">Bulk Mode</label>
+    <label class="switch">
+      <input type="checkbox" id="bulk-toggle">
+      <span class="slider"></span>
+    </label>
+  </div>
+      <div class="form-group">
+        <label>Recipient</label>
+        <input type="text" placeholder="+1-555-0101">
+      </div>
+      <div class="form-group">
+        <label>Alert Type</label>
+        <select>
+          <option>Emergency Alert</option>
+          <option>Warning Alert</option>
+          <option>Information Alert</option>
+        </select>
+      </div>
+      <div class="form-group">
+  <label>Area / Location</label>
+  <input type="text" id="alert-location" placeholder="Enter affected area or location" />
+</div>
+
+      <div class="form-group">
+        <label>Message Content</label>
+        <textarea rows="3" placeholder="Enter your alert message..."></textarea>
+      </div>
+      <div class="actions">
+        <button class="btn btn-primary">Send Now</button>
+        <button class="btn btn-outline">Schedule</button>
+      </div>
+    </div>
+
+    <!-- Recent SMS Requests -->
+    <div class="panel-card">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h2>📋 Recent Requests</h2>
+        
+      </div>
+      <div class="sms-list">
+        <div class="sms-item">
+          <div class="sms-header">
+            <span>SMS Requests</span>
+          </div>
+          
+        <div class="sms-item">
+          <div class="sms-header">
+            
+            <span class="status new">Request recieved<button class="btn btn-outline" style="padding:6px 12px; font-size:12px;display:block; margin-left:0;">View All</button></span>
+          </div>
+        
+          
+      </div>
+    </div>
+    <div class="sms-list">
+        <div class="sms-item">
+          <div class="sms-header">
+            <span>Phone Requests</span>
+          </div>
+          
+        <div class="sms-item">
+          <div class="sms-header">
+            <span class="status new">Request recieved<button class="btn btn-outline" style="padding:6px 12px; font-size:12px; display:block; margin-left:0;">View All</button></span>
+          </div>
+          
+        
+          
+      </div>
+    </div>
+  
+  <div class="sms-list">
+        <div class="sms-item">
+          <div class="sms-header">
+            <span>App Requests</span>
+          </div>
+          
+        <div class="sms-item">
+          <div class="sms-header">
+            <span class="status new">Request recieved<button class="btn btn-outline" style="padding:6px 12px; font-size:12px;display:block; margin-left:0;">View All</button></span>
+          </div>
+          
+        
+          
+      </div>
+    </div>
+</div>
+<script src="admin.js"></script>
+</body>
+</html>
