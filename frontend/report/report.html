@@ -191,10 +191,11 @@
           <option value="webapp">Web App</option>
         </select>
         <select>
-          <option value="">All Status</option>
-          <option value="pending">Pending</option>
-          <option value="completed">Completed</option>
-          <option value="failed">Failed</option>
+          <option value="">Severity</option>
+          <option value="high">high</option>
+          <option value="medium">medium</option>
+          <option value="low">low</option>
+          <option value="null">null</option>
         </select>
         <button class="btn-outline">⭐ Verified Only</button>
       </div>
@@ -215,6 +216,7 @@
               <th>Date/Time</th>
               <th>Status</th>
               <th>Actions</th>
+               <th>Severity</th>
             </tr>
           </thead>
           <tbody id="requests-table-body">

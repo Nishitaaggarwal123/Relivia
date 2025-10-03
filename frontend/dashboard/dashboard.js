@@ -6,30 +6,29 @@ if (localStorage.getItem('loggedIn') !== 'true') {
 // Dashboard link
 document.getElementById('dashboardLink').addEventListener('click', function(e){
   e.preventDefault(); 
-  window.location.href = "dashboard.html"; 
+  window.location.href = "../dashboard.html"; 
 });
 
 // Report link
 document.getElementById('reportLink').addEventListener('click', function(e){
   e.preventDefault();
-  window.location.href = "report.html"; 
+  window.location.href = "../report/report.html"; 
 });
 
 // Control Panel link
 document.getElementById('controlPanelLink').addEventListener('click', function(e){
   e.preventDefault();
-  
   window.location.href = "../admin/admin.html";
 });
-const analyticsLink = document.querySelector('.nav-links a[href="#"]:nth-child(4)'); // 4th link
-analyticsLink.addEventListener('click', function(e) {
+
+// Analytics link
+document.getElementById('analyticsLink').addEventListener('click', function(e) {
     e.preventDefault();
-    window.location.href = "../analytics/analytics.html"; // link to your analytics page
+    window.location.href = "../analytics/analytics.html"; 
 });
 
-
 // Logout link
-document.getElementById('logoutLink').addEventListener('click', function(e){
+document.getElementById('loginLink').addEventListener('click', function(e){
   e.preventDefault();
   localStorage.removeItem('loggedIn');
   localStorage.removeItem('role'); 
