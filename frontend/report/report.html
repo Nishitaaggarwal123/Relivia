@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Requests Dashboard</title>
+  <!-- Lucide icons -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9fafb;
+      margin: 0;
+      padding: 0;
+      color: #111827;
+    }
+
+    .header {
+      background: linear-gradient(to right,  #02edbe, #f2f6ff);
+      border-bottom: 1px solid #e5d4ff;
+      padding: 16px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 0 0 12px 12px;
+    }
+
+    .header .title {
+      font-size: 1.6rem;
+      font-weight: bold;
+      color: #111827;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .admin-id {
+      background: #fff;
+      border: 1px solid #d1d5db;
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #111827;
+    }
+
+    .system-status {
+      background: #d1fae5;
+      color: #059669;
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .system-status::before {
+      content: "✔";
+      font-weight: bold;
+    }
+
+    .container {
+      padding: 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .card {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+      margin-bottom: 20px;
+    }
+
+    .card h3 {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .grid {
+      display: grid;
+      gap: 20px;
+    }
+
+    .filters {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr auto;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .search-box {
+      position: relative;
+    }
+
+    .search-box input {
+      width: 90%;
+      padding: 8px 12px 8px 32px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+    }
+
+    .search-box .search-icon {
+      position: absolute;
+      top: 50%;
+      left: 8px;
+      transform: translateY(-50%);
+      width: 12px;
+      height: 16px;
+      color: #999;
+    }
+
+    .btn, .btn-outline {
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 14px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn {
+      background: #4f46e5;
+      color: white;
+      border: none;
+    }
+
+    .btn:hover { background: #4338ca; }
+
+    .btn-outline {
+      background: white;
+      border: 1px solid #ddd;
+      color: #333;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid #eee;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .subtext {
+      font-size: 12px;
+      color: #777;
+      margin-top: 4px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <div class="header">
+    <div class="title">Report</div>
+    <div class="header-right">
+      <div class="admin-id">👤 Admin</div>
+      <div class="system-status">System Active</div>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <!-- Filters -->
+    <div class="card">
+      <div class="filters">
+        <div class="search-box">
+          <i data-lucide="search" class="search-icon"></i>
+          <input type="text" placeholder="Search requests...">
+        </div>
+        <select>
+          <option value="">All Sources</option>
+          <option value="call">Call</option>
+          <option value="sms">SMS</option>
+          <option value="webapp">Web App</option>
+        </select>
+        <select>
+          <option value="">All Status</option>
+          <option value="pending">Pending</option>
+          <option value="completed">Completed</option>
+          <option value="failed">Failed</option>
+        </select>
+        <button class="btn-outline">⭐ Verified Only</button>
+      </div>
+    </div>
+
+    <!-- Requests Table -->
+    <div class="card">
+      <div class="card-header">
+        <h2 class="card-title">📨 Requests</h2>
+      </div>
+      <div class="card-content">
+        <table>
+          <thead>
+            <tr>
+              <th>Description</th>
+              <th>Source</th>
+              <th>User / Recipient</th>
+              <th>Date/Time</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="requests-table-body">
+            <!-- Rows dynamically loaded via JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+  <script src="report.js"></script>
+</body>
+</html>
